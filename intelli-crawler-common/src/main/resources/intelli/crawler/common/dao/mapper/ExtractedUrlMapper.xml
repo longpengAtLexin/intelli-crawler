@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="intelli.crawler.common.dao.mapper.ExtractedUrlMapper">
+
+	<resultMap id="BaseResultMap" type="intelli.crawler.common.dao.model.ExtractedUrl">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="requestTime" property="requestTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, url, requestTime
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from crawlerdb.ExtractedUrl
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from crawlerdb.ExtractedUrl
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	
+	<insert id="insert" parameterType="intelli.crawler.common.dao.model.ExtractedUrl">
+		INSERT INTO crawlerdb.ExtractedUrl( id,url,requestTime )
+        VALUES ( #{id,jdbcType=VARCHAR},
+        	#{url,jdbcType=VARCHAR},
+       		#{requestTime,jdbcType=TIMESTAMP}
+        	)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="intelli.crawler.common.dao.model.ExtractedUrl">
+		UPDATE crawlerdb.ExtractedUrl
+		<set>
+           	<if test="id != null">id=#{id},</if>
+            <if test="url != null">url=#{url},</if>
+            <if test="requestTime != null">requestTime=#{requestTime},</if>
+        </set>
+		WHERE id=#{id}
+	</update>
+	
+	<!-- @LZ_TAG_ID: SQL_CUSTOM BEGIN -->
+
+	<select id="select" resultMap="BaseResultMap" parameterType="intelli.crawler.common.dao.model.ExtractedUrl">
+		select
+		<include refid="Base_Column_List" />
+		from crawlerdb.ExtractedUrl
+		where 1=1
+		 
+        <if test="id != null">
+           AND id = #{id}
+        </if>
+        <if test="url != null">
+           AND url = #{url}
+        </if>
+          <if test="requestTime != null">
+           AND requestTime = #{requestTime}
+        </if>
+     </select>
+
+   
+
+</mapper>

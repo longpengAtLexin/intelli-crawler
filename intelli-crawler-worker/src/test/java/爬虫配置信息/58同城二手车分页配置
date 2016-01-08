@@ -1,0 +1,42 @@
+ 起始地址：
+ 
+ 
+   http://sz.58.com/ershouche/?minprice=8_10&utm_source=market&spm=b-31580022738699-me-f-824.bdpz_biaoti&PGTID=192740215189690830325488781&ClickID=1
+   
+   
+模式：
+    
+    http://sz.58.com/ershouche/pn.*
+    
+    http://sz.58.com/ershouche/.*
+    
+    -.*\\.(jpg|png|gif).*
+    
+    
+提取数据的页面：
+
+     
+	http://sz.58.com/ershouche/[0-9]+x.shtml.*
+	
+	
+字段：
+    
+	  PropertyInfo p1 = new  PropertyInfo("name", "h1.h1","车型");
+      PropertyInfo p2 = new  PropertyInfo("price", "span.font_jiage","价格");
+      PropertyInfo p3 = new  PropertyInfo("unit", "span.font_wan","单位");
+      
+      
+分页配置：
+
+	分页入口 ：
+
+   	http://sz.58.com/ershouche/pn2/?minprice=8_10&utm_source=market&spm=b-31580022738699-me-f-824.bdpz_biaoti&PGTID=174577279189690766449314300&ClickID=1
+     
+               分页模式：
+               
+    http://sz.58.com/ershouche/pn[0-9]+
+    
+               当前页数：2
+               
+               
+             

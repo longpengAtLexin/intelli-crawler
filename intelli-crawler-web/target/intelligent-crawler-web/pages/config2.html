@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <title>爬虫任务配置</title> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <link href="../bui/assets/css/dpl-min.css" rel="stylesheet" type="text/css" /> 
+  <link href="../bui/assets/css/bui-min.css" rel="stylesheet" type="text/css" /> 
+  <link href="../bui/assets/css/page-min.css" rel="stylesheet" type="text/css" /> 
+  <!-- 下面的样式，仅是为了显示代码，而不应该在项目中使用--> 
+  <link href="../bui/assets/css/prettify.css" rel="stylesheet" type="text/css" /> 
+  <style type="text/css">
+    code {
+      padding: 0px 4px;
+      color: #d14;
+      background-color: #f7f7f9;
+      border: 1px solid #e1e1e8;
+    }
+   </style> 
+  <script type="text/javascript" src="../bui/assets/js/jquery-1.8.1.min.js"></script> 
+  <script type="text/javascript" src="../bui/assets/js/bui-min.js"></script> 
+  <script type="text/javascript" src="../bui/assets/js/config-min.js"></script> 
+  <script type="text/javascript">
+    BUI.use('common/page');
+  </script> 
+  <!-- 仅仅为了显示代码使用，不要在项目中引入使用--> 
+  <script type="text/javascript" src="../bui/assets/js/prettify.js"></script> 
+  <script type="text/javascript" src="../js/config/Initializer2.js"></script> 
+ </head> 
+ <body> 
+   <div class="container">
+    <form id ="J_Form" class="form-horizontal">
+      <!--    -->
+      <h3>基本信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>爬虫任务名：</label>
+          <div class="controls">
+            <input name="name" type="text" class="span8 span-width control-text" data-rules="{required:true}">
+          </div>
+        </div>
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>遍历深度：</label>
+          <div class="controls">
+            <input name="crawlDepth" type="text" class="control-text" data-rules="{required:true}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="control-group12 span12">
+          <label class="control-label"><s>*</s>任务线程数：</label>
+          <div class="controls">
+            <input name="threadNum" type="text" class="control-text" data-rules="{required:true}">
+          </div>
+        </div>
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>数据输出：</label>
+          <div class="controls" id="outputDB">
+            <select name="outputDB" class="input-normal"> 
+                <option value="MYSQL">MYSQL</option>
+                <option value="HBASE">HBASE</option>
+              </select>
+           </div>
+        </div>
+      </div>
+      <h3>入口配置信息</h3>
+      <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="seedgrid"></div>
+        </div>
+      </div>
+      <hr/>
+      
+      <h3>目标url模式配置</h3>
+      <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="urlpatterngrid"></div>
+        </div>
+      </div>
+      <hr/>
+      
+      <h3>代理信息配置</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>配置代理：</label>
+          <div class="controls"  > <!-- id="isPaging" -->
+            <select name="setProxy" id="isPaging" class="input-normal"  onchange="Initializer.proxySetSelectChange(this)"> 
+                <option value=0>否</option>
+                <option value=1>是</option>
+              </select>
+           </div>
+        </div>
+      </div>
+     
+       <div  id= "proxyDetail" style="display:none;" >
+       <div class="row">
+       <div class="span21 offset3 control-row-auto">
+          	<div id="proxygrid"></div>
+         </div>
+        </div>
+       </div>
+        <hr/>
+       <!--   <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="fieldgrid"></div>
+        </div>
+      </div> -->
+      <!-- 提取字段信息 -->
+      <h3>数据提取信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>提取页url模式：</label>
+          <div class="controls">
+            <input name="extractUrlPattern" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      	<div class="control-group span12">
+          <label class="control-label"><s>*</s>表名：</label>
+          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+          	<input name="tablename" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+          </div>
+        	</div>
+      </div>
+      <div class="row">
+        <div class="control-group span24">
+          <label class="control-label"><s>*</s>表描述：</label>
+          <div class="controls">
+            <input name="tabledesc" type="text" class="control-text span8 span-width"  data-rules="{required:true}">
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>单页记录数：</label>
+          <div class="controls" id="numPerPage">
+            <select name="numPerPage" class="input-normal"  > 
+                <option value=1>1条</option>
+                <option value=2>多条</option>
+              </select>
+           </div>
+        </div>
+      </div>
+      
+      <!-- <div class="row">
+        <div class="control-group span24">
+          <label class="control-label">备注：</label>
+          <div class="controls control-row4">
+            <textarea name="" id="" class="span8 span-width"></textarea>
+          </div>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="fieldgrid"></div>
+        </div>
+      </div>
+      <hr/>
+      <!-- 分页配置信息 -->
+      <h3>分页配置信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>是否需要分页：</label>
+          <div class="controls" id="isPaging">
+            <select name="isPaging" class="input-normal"  onchange="Initializer.pagingSelectChange(this)"> 
+                <option value=0>不需分页</option>
+                <option value=1>需分页</option>
+              </select>
+           </div>
+        </div>
+      </div>
+      <div  id= "pagingDetail" style="display:none;" >
+      	<div class="row">
+	      	<div class="control-group span12">
+	          <label class="control-label"><s>*</s>分页url入口：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingSeedUrl" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+	          </div>
+	        </div>
+      	</div>
+      	<div class="row">
+	      	<div class="control-group span12">
+	          <label class="control-label"><s>*</s>分页url模式：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingUrlPattern" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+	          </div>
+	        </div>
+      	</div>
+      	<!-- <div class="row">
+	      	<div class="control-group span12">
+	          <label class="control-label"><s>*</s>分页参数名：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingName" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+	          </div>
+	        </div>
+      	</div> -->
+      	<div class="row">
+      		<div class="control-group span12">
+	          <label class="control-label"><s>*</s>当前页数：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="initPagingNum" type="text" class=" control-text" data-rules="{required:true}">
+	          </div>
+	        </div>
+	      	<div class="control-group span12">
+	          <label class="control-label"><s>*</s>页面数：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingNum" type="text" class=" control-text" data-rules="{required:true}">
+	          </div>
+	        </div>
+	        <div class="control-group span12">
+	          <label class="control-label"><s>*</s>步长：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="stepSize" type="text" class=" control-text" data-rules="{required:true}">
+	          </div>
+	        </div>
+	       <!--  <div class="control-group span12">
+          		<label class="control-label"><s>*</s>分页类型：</label>
+          		<div class="controls" id="isPaging">
+            	<select name=pagingType class="input-normal" style="width:200px"> 
+                	<option value=0>参数型(ParametricPagingType)</option>
+                	<option value=1>Restful型(RestfulPagingType)</option>
+              	</select>
+           		</div>
+        	</div> -->
+      	</div>
+      </div>
+        <hr/>
+        <br/>
+        <br/>
+        <br/>
+        
+      <div class="row">
+        <div class="form-actions offset3">
+          <button type="submit" class="button button-primary">保存</button>
+          <button type="reset" class="button">重置</button>
+        </div>
+      </div>
+    </form>
+    	<br/>
+        <br/>
+        <br/>
+         <br/>
+        <br/>
+  </div>
+   
+ </body>
+</html>
+  
+<script type="text/javascript">
+	Initializer.initAll();
+	Initializer.rigisterSubmitBtnHandler();
+</script>
+
+

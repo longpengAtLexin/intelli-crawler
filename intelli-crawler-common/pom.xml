@@ -1,0 +1,243 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+		<groupId>com.pl</groupId>
+		<artifactId>intelli-crawler</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+  <artifactId>intelli-crawler-common</artifactId>
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.2.8.RELEASE</spring.version>
+		<fastjson.version>1.1.34</fastjson.version>
+  </properties>
+  
+  <dependencies>
+  	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>fastjson</artifactId>
+		<version>1.1.39</version>
+	</dependency>
+	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			 <exclusions>  
+	        <exclusion>  
+	            <groupId>commons-logging</groupId>  
+	            <artifactId>commons-logging</artifactId>  
+	        </exclusion>  
+	    </exclusions>  
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+    		<groupId>mysql</groupId>
+    		<artifactId>mysql-connector-java</artifactId>
+    		<version>5.1.31</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+		<!-- mybatis 相关配置 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+    		<groupId>com.github.abel533</groupId>
+    		<artifactId>entitymapper</artifactId>
+		     <exclusions>  
+		        <exclusion>  
+		            <groupId>commons-logging</groupId>  
+		            <artifactId>commons-logging</artifactId>  
+		        </exclusion>  
+		    </exclusions>  
+    		<version>1.0.0</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.0.13</version>
+		</dependency> -->
+		 <dependency>
+		    <groupId>ch.qos.logback</groupId>
+		    <artifactId>logback-classic</artifactId>
+		    <version>1.0.13</version>
+		</dependency> 
+		
+		<!-- hbase client -->
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>0.98.6-cdh5.2.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>tomcat</groupId>
+					<artifactId>jasper-runtime</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>tomcat</groupId>
+					<artifactId>jasper-compiler</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>jdk.tools</groupId>
+			<artifactId>jdk.tools</artifactId>
+			<version>1.7</version>
+			<scope>system</scope>
+			<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+		</dependency>
+		
+   </dependencies>
+   
+   <profiles>
+		<profile>
+			<id>produce</id>
+			<properties>
+				<mysql_dataSource_userName>crawapp</mysql_dataSource_userName>
+				<mysql_dataSource_passWord>Crawler0318</mysql_dataSource_passWord>
+				<mysql_dataSource_jdbcUrl>jdbc:mysql://10.77.64.7:3306/crawlerdb</mysql_dataSource_jdbcUrl>
+				
+				<hbase_zookeeper_quorum>gtph01-002,gtph01-003,gtph01-004</hbase_zookeeper_quorum>
+				<hbase_master>gtph01-002</hbase_master>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<mysql_dataSource_userName>xiaofuqv</mysql_dataSource_userName>
+				<mysql_dataSource_passWord>123456</mysql_dataSource_passWord>
+				<mysql_dataSource_jdbcUrl>jdbc:mysql://10.75.201.109:3306/crawlerdb</mysql_dataSource_jdbcUrl>
+				
+				<hbase_zookeeper_quorum>A-HDS112,A-HDS113,A-HDS114</hbase_zookeeper_quorum>
+				<hbase_master>A-HDS113</hbase_master>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<mysql_dataSource_userName>xiaofuqv</mysql_dataSource_userName>
+				<mysql_dataSource_passWord>123456</mysql_dataSource_passWord>
+				<mysql_dataSource_jdbcUrl>jdbc:mysql://10.75.201.109:3306/crawlerdb</mysql_dataSource_jdbcUrl>
+				
+				<hbase_zookeeper_quorum>A-HDS112,A-HDS113,A-HDS114</hbase_zookeeper_quorum>
+				<hbase_master>A-HDS113</hbase_master>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
+	<build>
+
+		<!-- <resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.xsd</include>
+					<include>**/*.pem</include>
+					<include>**/*.sh</include>
+					<include>**/*.csv</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			</resources>
+ 	 	-->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>
+                <executions>
+		            <execution>
+		              <id>copy-resources</id>
+		              <phase>validate</phase>
+		              <goals>
+		                <goal>copy-resources</goal>
+		              </goals>
+		              <configuration>
+		               	<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+		                <resources>
+		                  <resource>
+		                    <directory>src/main/resources</directory> 
+		                   
+		                    <!-- <includes>
+		                    	<include>conf/mysql-dbconfig.properties</include>
+		                    </includes> -->
+		                    
+		                  <filtering>true</filtering>
+		                  </resource>
+		                </resources>
+		              </configuration>
+		              <inherited></inherited>
+		            </execution>
+		        </executions>
+			</plugin> 
+
+			<!-- <plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>conf/*.properties</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

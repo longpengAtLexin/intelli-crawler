@@ -1,0 +1,24 @@
+ 起始地址：
+ 
+    https://www.mo9.com/creditCenter/p/1
+    
+模式： 
+
+   https://www.mo9.com/creditCenter/p/[0-9]+
+   
+   -.*\\.(jpg|png|gif).*
+   
+遍历深度 :1
+   
+字段：
+
+  account mo9账号   dt.fl.row.row01
+  
+  name 真实姓名    dd.fl.row.row02
+       
+  cetno 身份证号    dd.fl.row.row03
+       
+  debtAmount 欠款金额    dd.fl.row.row04
+       
+  delayDay 逾期天数    dd.fl.row.row05
+       

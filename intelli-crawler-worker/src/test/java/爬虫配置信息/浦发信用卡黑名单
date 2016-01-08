@@ -1,0 +1,37 @@
+入口地址：
+
+      http://www.spdbccc.com.cn/spdb/cupd/collection.do?method=queryList&cityCode=&customerId=&customerName=&homeAddr=&curPage=1
+      
+便利深度：1
+  
+模式: 
+
+
+    http://www.spdbccc.com.cn/spdb/cupd/collection.do\?method=queryList&cityCode=&customerId=&customerName=&homeAddr=&curPage=[0-9]+
+    
+   
+提取页面:
+
+	http://www.spdbccc.com.cn/spdb/cupd/collection.do\?method=queryList&cityCode=&customerId=&customerName=&homeAddr=&curPage=[0-9]+
+	
+	
+	每页多条; 2
+	
+	
+字段：
+
+    
+     
+    info  tbody > tr   信息    1
+    
+  
+分页信息:  
+
+      	 分页入口 :
+      	 
+      	 http://www.spdbccc.com.cn/spdb/cupd/collection.do?method=queryList&cityCode=&customerId=&customerName=&homeAddr=&curPage=1
+      	 
+      	 
+      	分页模式 :
+      	
+      		http://www.spdbccc.com.cn/spdb/cupd/collection.do\?method=queryList&cityCode=&customerId=&customerName=&homeAddr=&curPage=[0-9]+

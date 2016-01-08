@@ -1,0 +1,152 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+   <parent>
+ 		<groupId>com.pl</groupId>
+ 		<artifactId>intelli-crawler</artifactId>
+ 		<version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>intelli-crawler-web</artifactId>
+  <packaging>war</packaging>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.2.8.RELEASE</spring.version>
+		<fastjson.version>1.1.34</fastjson.version>
+  </properties>
+  <dependencies>
+  	<dependency>
+	  	<groupId>com.pl</groupId>
+	  	<artifactId>intelli-crawler-common</artifactId>
+	  	<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>fastjson</artifactId>
+		<version>1.1.39</version>
+	</dependency>
+	<dependency>
+	<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>${spring.version}</version>
+		 <exclusions>  
+        <exclusion>  
+            <groupId>commons-logging</groupId>  
+            <artifactId>commons-logging</artifactId>  
+        </exclusion>  
+    </exclusions>  
+	</dependency>
+	
+	<!-- bridging package if  removed  commons-logging above-->
+	<dependency>  
+	    <groupId>org.slf4j</groupId>  
+	    <artifactId>jcl-over-slf4j</artifactId>  
+	    <version>1.7.7</version>  
+	</dependency> 
+	
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-orm</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-tx</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-web</artifactId>
+	<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+
+	<dependency>
+		<groupId>commons-lang</groupId>
+		<artifactId>commons-lang</artifactId>
+		<version>2.6</version>
+	</dependency>
+	<dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-classic</artifactId>
+	    <version>1.0.13</version>
+	</dependency> 
+	<!-- servlet规范库 -->
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+		<version>2.5</version>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet.jsp</groupId>
+		<artifactId>jsp-api</artifactId>
+		<version>2.1</version>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.2</version>
+		<type>jar</type>
+		<scope>provided</scope>
+	</dependency>
+   </dependencies>
+  <build>  
+  		<finalName>intelli-crawler-web</finalName>
+        <sourceDirectory>src/main/java</sourceDirectory>  
+        <plugins>  
+           <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-compiler-plugin</artifactId>  
+                <configuration>  
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>  
+                    <source>1.7</source>  
+                    <target>1.7</target>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+            </plugin>  -->
+           <!-- <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>  
+                <version>2.1</version>  
+                <executions>  
+                    <execution>  
+                        <id>copy-dependencies</id>  
+                        <phase>prepare-package</phase>  
+                        <goals>  
+                            <goal>copy-dependencies</goal>  
+                        </goals>  
+                    </execution>  
+                </executions>  
+                <configuration>  
+                    <includeTypes>jar</includeTypes>  
+                    <overWriteSnapshots>true</overWriteSnapshots>  
+                    <type>jar</type>  
+                    <outputDirectory>${project.build.directory}/lib</outputDirectory>  
+                </configuration>  
+            </plugin>  -->
+           <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-resources-plugin</artifactId>  
+                <version>2.4</version>  
+                <configuration>  
+                    <encoding>UTF-8</encoding>  
+                </configuration>  
+            </plugin>  -->
+        </plugins>  
+    </build>
+    
+</project>

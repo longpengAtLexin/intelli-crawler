@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	
+
+	<bean id="golbalconfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>file:/app/intellicrawler/conf/crawlerconfig.properties</value>
+			</list>
+		</property>
+	</bean>
+ 
+	
+	
+	<!-- <context:component-scan base-package="intelli.crawler.worker.core" /> -->
+	<bean id="serviceExporter" class="org.springframework.remoting.rmi.RmiServiceExporter">  
+        <property name="serviceName" value="CrawlerTaskService" />  
+        <property name="service" ref="crawlerTaskService" />  
+        <property name="serviceInterface"  value="intelli.crawler.common.service.CrawlerTaskService" />  
+        <property name="registryPort" value="${crawler.registryPort}" />  
+        <property name="servicePort" value="${crawler.servicePort}" />  
+    </bean>  
+  
+    <bean id="crawlerTaskService" class="intelli.crawler.worker.core.DefaultCrawlerTaskServiceImpl" />  
+
+</beans>

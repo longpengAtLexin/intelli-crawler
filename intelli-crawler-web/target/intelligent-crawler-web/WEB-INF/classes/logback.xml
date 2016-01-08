@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+  
+ <appender name="R" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+    <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
+    <!--for further documentation-->
+    <Encoding>UTF-8</Encoding>
+    <Append>true</Append>
+    <File>/app/intellicrawler/log/web/all/crawler-web.log</File>
+    <encoder>
+      <pattern>%d|%p|zx|NA|%t|Search|NA|NA|[%C.%M:%L] %m%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+     <fileNamePattern>/app/intellicrawler/log/web/all/crawler-web.log_%d{yyyy-MM-dd}.zip</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <Encoding>UTF-8</Encoding>
+    <encoder>
+      <pattern>[%d][%p][%t][%C.%M:%L] %m%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+  	<Encoding>UTF-8</Encoding>
+    <Append>true</Append>
+    <File>/app/intellicrawler/log/web/error/crawler-web-error.log</File>
+    <encoder>
+      <pattern>%d|%p|zx|NA|%t|Search|NA|NA|[%C.%M:%L] %m%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    	<fileNamePattern>/app/intellicrawler/log/web/error/crawler-web-error.log_%d{yyyy-MM-dd}</fileNamePattern>
+    </rollingPolicy>
+  </appender>
+  
+  
+  
+  
+  <root level="INFO">
+    <appender-ref ref="R"/>
+    <appender-ref ref="stdout"/>
+    <appender-ref ref="Error"/>
+  </root>
+</configuration>

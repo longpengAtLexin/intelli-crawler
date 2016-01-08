@@ -1,0 +1,56 @@
+入口地址：
+
+	 http://www.wangdaiwuyou.com/wdda.asp?Page=1
+	 
+模式:
+    http://www.wangdaiwuyou.com/wdda.asp\?Page=[0-9]+
+    
+    http://www.wangdaiwuyou.com/.*
+    
+    -.*\\.(jpg|png|gif).*
+    
+提取页面模式 :
+
+    http://www.wangdaiwuyou.com/wdda.asp\?Page=[0-9]+
+    
+    
+    每页多条; 2
+    
+    字段：
+
+    -------------基本信息 ----------------------
+     
+    name  div:containsOwn(姓名)    姓名    1
+    
+    certno  div:containsOwn(证件号)    证件号    1
+    
+    sex  div:containsOwn(性别)    性别   1
+    
+    certAddress  div:containsOwn(身份证地址)    身份证地址    1
+    
+    homeAddress  div:containsOwn(家庭地址)    家庭地址    1
+    
+    tel  div:containsOwn(联系电话)    联系电话    1
+    
+    ------------ 公司信息---------------------
+    company  div:containsOwn(公司名称)   公司名称
+    
+    title    div:containsOwn(公司职务)	        公司职务
+    
+    companyAddress    div:containsOwn(公司地址)	       公司地址
+    
+    ---------------贷款信息------------------------
+    
+    qkbxze    div:containsOwn(欠款本息总额)	        欠款本息总额
+    
+    
+分页信息:
+
+     入口：http://www.wangdaiwuyou.com/wdda.asp?Page=1
+
+     模式：http://www.wangdaiwuyou.com/wdda.asp\?Page=[0-9]+
+     
+  页面数：107
+
+    
+    

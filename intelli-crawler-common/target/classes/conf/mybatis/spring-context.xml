@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- <import resource="debug.xml" /> -->
+
+	<bean id="golbalconfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>file:/app/intellicrawler/conf/mysql-dbconfig.properties</value>
+				<!-- <value>classpath:/conf/mysql-dbconfig.properties</value> -->
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="driverClassName" value="${dataSource.driverClassName}" />
+		<property name="url" value="${dataSource.jdbcUrl}" />
+		<property name="username" value="${dataSource.userName}" />
+		<property name="password" value="${dataSource.passWord}" />
+
+		<!--initialise max min-->
+		<property name="initialSize" value="${dataSource.initialSize}" />
+		<property name="minIdle" value="${dataSource.minIdle}" />
+		<property name="maxActive" value="${dataSource.maxActive}" />
+
+		<!-- max wait -->
+		<property name="maxWait" value="${dataSource.maxWait}" />
+
+		<!-- check time -->
+		<property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}" />
+
+		<property name="minEvictableIdleTimeMillis" value="${dataSource.minEvictableIdleTimeMillis}" />
+
+		<property name="testWhileIdle" value="${dataSource.testWhileIdle}" />
+		<property name="testOnBorrow" value="${dataSource.testOnBorrow}" />
+		<property name="testOnReturn" value="${dataSource.testOnReturn}" />
+
+		<property name="validationQuery" value="${dataSource.validationQuery}" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!--<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor"> <property name="transactionManager" ref="transactionManager" /> <property name="transactionAttributes"> 
+		<props> <prop key="*">PROPAGATION_REQUIRED,-Exception</prop> </props> </property> </bean> -->
+
+	<!-- <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"> <property name="beanNames"> <list> <value>*Dao</value> </list> </property> <property name="interceptorNames"> <list> 
+		<value>transactionInterceptor</value> </list> </property> </bean> -->
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:intelli/crawler/common/dao/mapper/*.xml" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH" />
+	</bean>
+
+	<bean id="sqlMapper" class="com.github.abel533.sql.SqlMapper" scope="prototype">
+	  <constructor-arg ref="sqlSession"/>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="intelli.crawler.common.dao.mapper" />
+	</bean>
+
+	<context:component-scan base-package="intelli.crawler.common.dao" />
+	<tx:annotation-driven proxy-target-class="false" transaction-manager="transactionManager" />
+
+</beans>

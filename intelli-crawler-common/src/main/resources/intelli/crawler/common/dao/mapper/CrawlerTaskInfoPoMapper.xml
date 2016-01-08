@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="intelli.crawler.common.dao.mapper.CrawlerTaskInfoPoMapper">
+
+	<resultMap id="BaseResultMap" type="intelli.crawler.common.dao.model.CrawlerTaskInfoPo">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="pid" property="pid" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="confstr" property="confstr" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="outputDB" property="outputDB" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modifyTime" property="modifyTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<resultMap id="CountModel" type="intelli.crawler.common.dao.model.CountModel">
+		<result column="countNum" property="countNum" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, pid, name,confstr,status,outputDB,createTime,modifyTime
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from crawlerdb.crawlertaskinfo
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from crawlerdb.crawlertaskinfo
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	
+	<insert id="insert" parameterType="intelli.crawler.common.dao.model.CrawlerTaskInfoPo">
+		INSERT INTO crawlerdb.crawlertaskinfo( id,pid,name,confstr,status,outputDB,createTime,modifyTime )
+        VALUES ( #{id,jdbcType=VARCHAR},#{pid,jdbcType=VARCHAR},
+        	#{name,jdbcType=VARCHAR},
+        	#{confstr,jdbcType=VARCHAR},
+        	#{status,jdbcType=VARCHAR},
+        	#{outputDB,jdbcType=VARCHAR},
+        	#{createTime,jdbcType=TIMESTAMP},
+        	#{modifyTime,jdbcType=TIMESTAMP}
+        	)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="intelli.crawler.common.dao.model.CrawlerTaskInfoPo">
+		UPDATE crawlerdb.crawlertaskinfo
+		<set>
+           	<if test="id != null">id=#{id},</if>
+            <if test="pid != null">pid=#{pid},</if>
+            <if test="name != null">name=#{name},</if>
+            <if test="confstr != null">confstr=#{confstr},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="outputDB != null">outputDB=#{outputDB},</if>
+            <if test="createTime != null">createTime=#{createTime},</if>
+            <if test="modifyTime != null">modifyTime=#{modifyTime},</if>
+        </set>
+		WHERE id=#{id}
+	</update>
+	
+	<!-- @LZ_TAG_ID: SQL_CUSTOM BEGIN -->
+
+	<select id="select" resultMap="BaseResultMap" parameterType="intelli.crawler.common.dao.model.CrawlerTaskInfoPo">
+		select
+		<include refid="Base_Column_List" />
+		from crawlerdb.crawlertaskinfo
+		where 1=1
+		 
+        <if test="id != null">
+           AND id = #{id}
+        </if>
+        <if test="pid != null">
+           AND pid = #{pid}
+        </if>
+        <if test="name != null">
+           AND name = #{name}
+        </if>
+        <if test="confstr != null">
+           AND confstr = #{confstr}
+        </if>
+        <if test="status != null">
+           AND status = #{status}
+        </if>
+        <if test="outputDB != null">
+           AND outputDB = #{outputDB}
+        </if>
+        
+        <if test="createTime != null">
+           AND createTime = #{createTime}
+        </if>
+        <if test="modifyTime != null">
+           AND modifyTime = #{modifyTime}
+        </if>
+     </select>
+
+   <!-- 分页查找 -->
+	<select id="selectPaging" resultMap="BaseResultMap" parameterType="intelli.crawler.common.dao.model.PagingCrawlerTaskInfoPo">
+		select
+		<include refid="Base_Column_List" />
+		from crawlerdb.crawlertaskinfo
+		where 1=1
+		 
+        <if test="id != null">
+           AND id = #{id}
+        </if>
+        <if test="pid != null">
+           AND pid = #{pid}
+        </if>
+        <if test="name != null">
+           AND name like  "%"#{name}"%"
+        </if>
+        <if test="confstr != null">
+           AND confstr = #{confstr}
+        </if>
+          <if test="status != null">
+           AND status = #{status}
+        </if>
+       <!--  <if test="createTime != null">
+           AND createTime = #{createTime}
+        </if>
+        <if test="modifyTime != null">
+           AND modifyTime = #{modifyTime}
+        </if> -->
+        <if test="startDate != null">
+           AND createTime &gt;  str_to_date( #{startDate},'%Y-%m-%d %H:%i:%s')
+        </if>
+         <if test="endDate != null">
+           AND createTime &lt; str_to_date( #{endDate},'%Y-%m-%d %H:%i:%s')
+        </if>
+         order by modifyTime desc   limit #{start},#{limit}
+     </select>
+
+	<select id="count" resultMap="CountModel" parameterType="intelli.crawler.common.dao.model.PagingCrawlerTaskInfoPo">
+		select
+		count(*) as countNum
+		from crawlerdb.crawlertaskinfo
+		where 1=1
+		 
+        <if test="id != null">
+           AND id = #{id}
+        </if>
+        <if test="pid != null">
+           AND pid = #{pid}
+        </if>
+        <if test="name != null">
+           AND name like "%"#{name}"%"
+        </if>
+        <if test="confstr != null">
+           AND confstr = #{confstr}
+        </if>
+         <if test="status != null">
+           AND status = #{status}
+        </if>
+       <if test="startDate != null">
+           AND createTime &gt;  str_to_date( #{startDate},'%Y-%m-%d %H:%i:%s')
+        </if>
+         <if test="endDate != null">
+           AND createTime &lt; str_to_date( #{endDate},'%Y-%m-%d %H:%i:%s')
+        </if>
+     </select>
+
+</mapper>

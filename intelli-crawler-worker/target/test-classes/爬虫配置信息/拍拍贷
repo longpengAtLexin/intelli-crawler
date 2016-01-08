@@ -1,0 +1,44 @@
+入口地址:
+
+     http://www.ppdai.com/blacklist/2015
+     
+便利深度 :2 
+模式 :
+
+    http://www.ppdai.com/blacklist/2015_m0_p[0-9]+
+    
+    http://www.ppdai.com/blacklist/.*
+    
+    -.*\\.(jpg|png|gif).*
+    
+         
+    http://www.ppdai.com/blacklistdetail/[A-Za-z0-9_]+
+     
+     
+     
+提取页面:
+     
+     http://www.ppdai.com/blacklistdetail/[A-Za-z0-9_]+
+     
+     
+字段:
+
+   	 基本信息     div.info_tit > span.float_l  baseinfo   1
+   	 
+   	借款信息         div.table_nav > table > tbody > tr   loaninfo    2(多个才能把信息完整得提取出来)
+     
+     
+分页信息:  
+
+                 分页入口 : http://www.ppdai.com/blacklist/2015_m0_p1
+     
+                 分页模式  : http://www.ppdai.com/blacklist/2015_m0_p[0-9]+
+                 
+                 
+     拍拍贷黑名单 大量的 503错误，可能要配置重试次数.                 
+
+		fetch http://www.ppdai.com/blacklistdetail/huahua1016 failed,java.io.IOException: Server returned HTTP response code: 503 for URL: http://www.ppdai.com/blacklistdetail/huahua1016   retry
+		
+		
+	
+     

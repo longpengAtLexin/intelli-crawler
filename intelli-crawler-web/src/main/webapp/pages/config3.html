@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <title>爬虫任务配置</title> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <link href="../bui/assets/css/dpl-min.css" rel="stylesheet" type="text/css" /> 
+  <link href="../bui/assets/css/bui-min.css" rel="stylesheet" type="text/css" /> 
+  <link href="../bui/assets/css/page-min.css" rel="stylesheet" type="text/css" /> 
+  <!-- 下面的样式，仅是为了显示代码，而不应该在项目中使用--> 
+  <link href="../bui/assets/css/prettify.css" rel="stylesheet" type="text/css" /> 
+<style type="text/css">
+	*{margin:0;padding:0;list-style-type:none;}
+	a,img{border:0;}
+	body{font:12px/180% Arial, Helvetica, sans-serif, "新宋体";}
+	/* demo */
+	.demo{width:100%;margin:10px auto;background:#f0f0f0;position:relative;}
+	.demo ul{height:32px;overflow:hidden;}
+	.demo li{float:left;width:200px;text-align:center;position:relative;z-index:2;font-weight:bold;font-size:14px;line-height:32px;}
+	.demo li em{position:absolute;right:-24px;top:-8px;width:0;height:0;line-height:0;border-width:24px 0 24px 24px;border-color:transparent transparent transparent #fff;border-style:dashed dashed dashed solid;}
+	.demo li i{position:absolute;right:-16px;top:0;width:0;height:0;line-height:0;border-width:16px 0 16px 16px;border-color:transparent transparent transparent #f0f0f0;border-style:dashed dashed dashed solid;}
+	.demo li.current{background:#f60;color:#fff;z-index:1;}
+	.demo li.current i{border-color:transparent transparent transparent #f60;}
+</style>
+  <script type="text/javascript" src="../bui/assets/js/jquery-1.8.1.min.js"></script> 
+  <script type="text/javascript" src="../bui/assets/js/bui-min.js"></script> 
+  <script type="text/javascript" src="../bui/assets/js/config-min.js"></script> 
+  <script type="text/javascript">
+    BUI.use('common/page');
+  </script> 
+  <!-- 仅仅为了显示代码使用，不要在项目中引入使用--> 
+  <script type="text/javascript" src="../bui/assets/js/prettify.js"></script> 
+  <script type="text/javascript" src="../js/config/Initializer3.js"></script> 
+ </head> 
+ <body>
+	 <div class="demo">
+	<ul class="clearfix">
+	<li>面包屑一<em></em><i></i></li>
+	<li class="current">面包屑二<em></em><i></i></li>
+	<li>面包屑二<em></em><i></i></li>
+	</ul>
+	</div> 
+   <div class="container">
+    <form id ="J_Form" class="form-horizontal">
+      <!--    -->
+      <h3>基本信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>爬虫任务名：</label>
+          <div class="controls">
+            <input name="name" type="text" class="span8 span-width control-text" data-rules="{required:true}">
+          </div>
+        </div>
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>遍历深度：</label>
+          <div class="controls">
+            <input name="crawlDepth" type="text" class="control-text" data-rules="{required:true}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="control-group12 span12">
+          <label class="control-label"><s>*</s>任务线程数：</label>
+          <div class="controls">
+            <input name="threadNum" type="text" class="control-text" data-rules="{required:true}">
+          </div>
+        </div>
+      </div>
+      <h3>入口配置信息</h3>
+      <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="seedgrid"></div>
+        </div>
+      </div>
+      <hr/>
+      
+      <h3>目标url模式配置</h3>
+      <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="urlpatterngrid"></div>
+        </div>
+      </div>
+      <hr/>
+      
+      <!-- 提取字段信息 -->
+      <h3>数据提取信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>提取页url模式：</label>
+          <div class="controls">
+            <input name="extractUrlPattern" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      	<div class="control-group span12">
+          <label class="control-label"><s>*</s>表名：</label>
+          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+          	<input name="tablename" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+          </div>
+        	</div>
+      </div>
+      <div class="row">
+        <div class="control-group span24">
+          <label class="control-label"><s>*</s>表描述：</label>
+          <div class="controls">
+            <input name="tabledesc" type="text" class="control-text span8 span-width"  data-rules="{required:true}">
+          </div>
+        </div>
+        
+      </div>
+      <!-- <div class="row">
+        <div class="control-group span24">
+          <label class="control-label">备注：</label>
+          <div class="controls control-row4">
+            <textarea name="" id="" class="span8 span-width"></textarea>
+          </div>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="fieldgrid"></div>
+        </div>
+      </div>
+      <hr/>
+      <!-- 分页配置信息 -->
+      <h3>分页配置信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>是否需要分页：</label>
+          <div class="controls" id="isPaging">
+            <select name="isPaging" class="input-normal"  onchange="Initializer.pagingSelectChange(this)"> 
+                <option value=0>不需分页</option>
+                <option value=1>需分页</option>
+              </select>
+           </div>
+        </div>
+      </div>
+      <div  id= "pagingDetail" style="display:none;" >
+      	<div class="row">
+	      	<div class="control-group span12">
+	          <label class="control-label"><s>*</s>分页url入口：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingSeedUrl" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+	          </div>
+	        </div>
+      	</div>
+      	<div class="row">
+	      	<div class="control-group span12">
+	          <label class="control-label"><s>*</s>分页参数名：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingName" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+	          </div>
+	        </div>
+      	</div>
+      	<div class="row">
+	      	<div class="control-group span12">
+	          <label class="control-label"><s>*</s>页面数：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingNum" type="text" class=" control-text" data-rules="{required:true}">
+	          </div>
+	        </div>
+	        <div class="control-group span12">
+	          <label class="control-label"><s>*</s>步长：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="stepSize" type="text" class=" control-text" data-rules="{required:true}">
+	          </div>
+	        </div>
+	        <div class="control-group span12">
+          		<label class="control-label"><s>*</s>分页类型：</label>
+          		<div class="controls" id="isPaging">
+            	<select name=pagingType class="input-normal" style="width:200px"> 
+                	<option value=0>参数型(ParametricPagingType)</option>
+                	<option value=1>Restful型(RestfulPagingType)</option>
+              </select>
+           </div>
+        </div>
+      	</div>
+      </div>
+        <hr/>
+        <br/>
+        <br/>
+        <br/>
+        
+      <div class="row">
+        <div class="form-actions offset3">
+          <button type="submit" class="button button-primary">保存</button>
+          <button type="reset" class="button">重置</button>
+        </div>
+      </div>
+    </form>
+    	<br/>
+        <br/>
+        <br/>
+         <br/>
+        <br/>
+  </div>
+   
+ </body>
+</html>
+  
+<script type="text/javascript">
+	Initializer.initAll();
+	Initializer.rigisterSubmitBtnHandler();
+</script>
+
+

@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title> 爬虫任务列表</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+       <link href="../bui/assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
+    <link href="../bui/assets/css/bui-min.css" rel="stylesheet" type="text/css" />
+    <link href="../bui/assets/css/page-min.css" rel="stylesheet" type="text/css" />   <!-- 下面的样式，仅是为了显示代码，而不应该在项目中使用-->
+   <link href="../bui/assets/css/prettify.css" rel="stylesheet" type="text/css" />
+   <style type="text/css">
+    code {
+      padding: 0px 4px;
+      color: #d14;
+      background-color: #f7f7f9;
+      border: 1px solid #e1e1e8;
+    }
+   </style>
+ </head>
+ <body>
+  <div id="content" class="hide">
+      <form id ="J_Form" class="form-horizontal" action="../editCrawlerConfigInfo">
+      <!--    -->
+      <h3>基本信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>爬虫任务名：</label>
+          <div class="controls">
+            <input name="name" type="text" class="span8 span-width control-text" data-rules="{required:true}">
+          </div>
+        </div>
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>遍历深度：</label>
+          <div class="controls">
+            <input name="crawlDepth" id="crawlDepth" type="text" class="control-text" data-rules="{required:true}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="control-group12 span12">
+          <label class="control-label"><s>*</s>任务线程数：</label>
+          <div class="controls">
+            <input name="threadNum" id="threadNum" type="text" class="control-text" data-rules="{required:true}">
+          </div>
+        </div>
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>数据输出：</label>
+          <div class="controls" id="outputDB">
+            <select name="outputDB" id="outputDB" class="input-normal"> 
+                <option value="MYSQL">MYSQL</option>
+                <option value="HBASE">HBASE</option>
+              </select>
+           </div>
+        </div>
+      </div>
+      <!-- <h3>入口配置信息</h3>
+      <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="seedgrid"></div>
+        </div>
+      </div>
+      <hr/> -->
+      
+     <!--  <h3>目标url模式配置</h3>
+      <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="urlpatterngrid"></div>
+        </div>
+      </div>
+      <hr/> -->
+      
+      <!-- 提取字段信息 -->
+     <!--  <h3>数据提取信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>提取页url模式：</label>
+          <div class="controls">
+            <input name="extractUrlPattern" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+          </div>
+        </div>
+      </div> -->
+      <!-- <div class="row">
+      	<div class="control-group span12">
+          <label class="control-label"><s>*</s>表名：</label>
+          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+          	<input name="tablename" type="text" class=" control-text  span8 span-width" data-rules="{required:true}">
+          </div>
+        	</div>
+      </div>
+      <div class="row">
+        <div class="control-group span24">
+          <label class="control-label"><s>*</s>表描述：</label>
+          <div class="controls">
+            <input name="tabledesc" type="text" class="control-text span8 span-width"  data-rules="{required:true}">
+          </div>
+        </div>
+        
+      </div> -->
+     
+     <!--  <div class="row">
+        <div class="span21 offset3 control-row-auto">
+          <div id="fieldgrid"></div>
+        </div>
+      </div> -->
+      <hr/>
+      <!-- 分页配置信息 -->
+      <h3>分页配置信息</h3>
+      <div class="row">
+        <div class="control-group span12">
+          <label class="control-label"><s>*</s>是否需要分页：</label>
+          <div class="controls" >
+            <select name="isPaging" id ="isPaging" class="input-normal"  onchange="Initializer.pagingSelectChange(this)"> 
+                <option value="0">不需分页</option>
+                <option value="1">需分页</option>
+              </select>
+           </div>
+        </div>
+      </div>
+      <div  id= "pagingDetail" style="display:none;" >
+      	<div class="row">
+	      	<div class="control-group span12">
+	          <label class="control-label"><!-- <s>*</s> -->分页url入口：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingSeedUrl" id="pagingSeedUrl" type="text" class=" control-text  span8 span-width" >
+	          </div>
+	        </div>
+      	</div>
+      	<div class="row">
+	      	<div class="control-group span12">
+	          <label class="control-label"><!-- <s>*</s> -->分页url模式：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingUrlPattern" id="pagingUrlPattern" type="text" class=" control-text  span8 span-width" >
+	          </div>
+	        </div>
+      	</div>
+      	<div class="row">
+      		<div class="control-group span12">
+	          <label class="control-label"><!-- <s>*</s> -->当前页数：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="initPagingNum" id="initPagingNum" type="text" class=" control-text" >
+	          </div>
+	        </div>
+	      	<div class="control-group span12">
+	          <label class="control-label"><!-- <s>*</s> -->页面数：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="pagingNum" id="pagingNum" type="text" class=" control-text" >
+	          </div>
+	        </div>
+	        <div class="control-group span12">
+	          <label class="control-label"><!-- <s>*</s> -->步长：</label>
+	          <div class="controls bui-form-group" data-rules="{dateRange:true}" >
+	          	<input name="stepSize" id="stepSize" type="text" class=" control-text" >
+	          </div>
+	        </div>
+	    </div>
+      </div>
+        <hr/>
+     </form>
+    </div>
+  <div class="container">
+    <div class="row">
+      <form id="searchForm" class="form-horizontal span24">
+        <div class="row">
+        <!--   <div class="control-group span8">
+            <label class="control-label">任务Id：</label> 
+            <div class="controls">
+              <input type="hidden" class="control-text" name="id">
+            </div>
+          </div> -->
+         <!--  <div class="control-group span8">
+             <label class="control-label">任务组Id：</label> 
+            <div class="controls">
+               <input type="hidden" class="control-text" name="pid">
+            </div>
+          </div> -->
+          <div class="control-group span8">
+            <label class="control-label">任务名：</label>
+            <div class="controls" >
+             <input type="text" class="control-text" name="name">
+            </div>
+          </div>
+           <div class="control-group span9">
+            <label class="control-label">创建时间：</label>
+            <div class="controls">
+              <input type="text" class=" calendar" name="startDate"><span> - </span><input name="endDate" type="text" class=" calendar">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span3 offset2">
+            <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="search-grid-container">
+      <div id="grid"></div>
+    </div>
+  </div>
+  <script type="text/javascript" src="../bui/assets/js/jquery-1.8.1.min.js"></script>
+  <script type="text/javascript" src="../bui/assets/js/bui-min.js"></script>
+
+
+  <script type="text/javascript" src="../bui/assets/js/config-min.js"></script>
+  <script type="text/javascript">
+    BUI.use('common/page');
+  </script>
+  <!-- 仅仅为了显示代码使用，不要在项目中引入使用-->
+  <script type="text/javascript" src="../bui/assets/js/prettify.js"></script>
+  <script type="text/javascript">
+    $(function () {
+    /*   prettyPrint(); */
+    });
+  </script> 
+<script type="text/javascript">
+	var editing = null;
+	BUI.use(['bui/grid','bui/data'],function (Grid,Data) {
+		editing = new Grid.Plugins.DialogEditing({
+	        contentId : 'content',
+	        triggerCls : 'btn-edit',
+	        autoSave : true
+	      });
+
+		editing.on('editorready',function(rd){
+
+		
+		});  
+		editing.on('editorshow',function(ev){
+
+		});  
+		editing.on('recordchange',function(ev){
+
+			var crawlerTaskConfig = BUI.JSON.parse( ev.record.confstr );
+			$("#crawlDepth").val(crawlerTaskConfig.crawlDepth);
+			$("#threadNum").val(crawlerTaskConfig.threadNum);
+			$("#outputDB").val(crawlerTaskConfig.outputDB);
+
+			var pagingConfig = crawlerTaskConfig.pagingConfig||null;
+			if(pagingConfig)
+			{
+				if(pagingConfig.isPaging=="0")
+				{
+					document.getElementById("pagingDetail").style.display = "none";
+				}else
+				{
+					document.getElementById("pagingDetail").style.display = "";
+				}
+				$("#isPaging").val(pagingConfig.isPaging);
+				$("#initPagingNum").val(pagingConfig.initPagingNum);
+				$("#pagingNum").val(pagingConfig.pagingNum);
+				$("#pagingSeedUrl").val(pagingConfig.pagingSeedUrl);
+				$("#pagingUrlPattern").val(pagingConfig.pagingUrlPattern);
+				$("#stepSize").val(pagingConfig.stepSize);	
+			}else
+			{
+				document.getElementById("pagingDetail").style.display = "none";
+			}
+		});  
+		
+		editing.on('accept',function(ev, form){
+
+		}); 
+		editing.on('cancel',function(ev, form){
+
+		
+		});  
+		
+	});
+
+	BUI.use(['common/search','bui/overlay'],function (Search,Overlay) {
+	  var enumObj = {"NEW":"新建","RUNNING":"运行","EXCEPTION_TERMINATED":"异常终止","COMPLETED":"完成"},
+		columns = [
+          {title:'任务Id',dataIndex:'id',width:300 },
+          {title:'任务组Id',dataIndex:'pid', visible : false },
+          {title:'任务名',dataIndex:'name',width:200 },
+          {title:'创建时间',dataIndex:'createTime',width:200,renderer:BUI.Grid.Format.datetimeRenderer},
+          {title:'修改时间',dataIndex:'modifyTime',width:200,renderer:BUI.Grid.Format.datetimeRenderer},
+          {title:'状态',dataIndex:'status',width:100,renderer:BUI.Grid.Format.enumRenderer(enumObj)},
+          {title:'操作',dataIndex:'',width:200,renderer : function(value,obj){
+            var editStr = '<span class="grid-command btn-edit" title="编辑爬虫任务" >编辑</span>';//页面操作不需要使用Search.createLink
+              startStr = '<span class="grid-command btn-start" title="启动爬虫任务" >启动</span>';//页面操作不需要使用Search.createLink
+              delStr = '<span class="grid-command btn-del" title="删除爬虫任务信息">删除</span>';//页面操作不需要使用Search.createLink
+            return editStr + startStr+delStr;
+          }}
+        ],
+      store = Search.createStore('../getCrawlerInfo',{
+          proxy : {
+              save : { //也可以是一个字符串，那么增删改，都会往那么路径提交数据，同时附加参数saveType
+                /* addUrl : '../data/add.json', */
+                updateUrl : '../editCrawlerConfigInfo',
+                /* removeUrl : '../data/del.php' */
+              },
+              method : 'POST'
+            },
+            autoSync : true //保存数据后，自动更新
+    	}),
+      gridCfg = Search.createGridCfg(columns,{
+        id:"crawlerTaskGrid",  
+        tbar : {
+          items : [
+    		 {text : '<i class="icon-refresh"></i>刷新',btnCls : 'button button-small',handler:function(){store.load() }},
+             {text : '<i class="icon-remove"></i>删除',btnCls : 'button button-small',handler : delFunction}
+          ]
+        },
+        plugins : [BUI.Grid.Plugins.CheckSelection,editing] // 插件形式引入多选表格
+      });
+
+    var  search = new Search({
+        store : store,
+        gridCfg : gridCfg
+      }),
+      grid = search.get('grid');
+    //删除操作
+    function delFunction(){
+      var selections = grid.getSelection();
+      delItems(selections);
+    }
+
+    function delItems(items){
+      var ids = [];
+      BUI.each(items,function(item){
+        ids.push(item.id);
+      });
+
+      if(ids.length){
+        BUI.Message.Confirm('确认要删除选中的记录么？',function(){
+         $.ajax({
+            url : '../deleteCrawlerConfigInfo',
+            type: "POST",
+            dataType : 'json',
+            data: "ids="+BUI.JSON.stringify(ids),
+            /* data : {ids : BUI.JSON.stringify(ids)}, */
+            success : function(data){
+              if(data.success){ //删除成功
+                	search.load();
+              }else{ //删除失败
+                BUI.Message.Alert('删除失败,error：'+data.error);
+              }
+            }
+        });
+        },'question');
+      }
+    }
+
+    function startItems(items,sender){
+        var ids = [];
+        BUI.each(items,function(item){
+          ids.push(item.id);
+        });
+       if(ids.length==1){
+        	BUI.Message.Confirm('确认启动选中的任务么？',function(){
+        		 sender.html('<span class="grid-command btn-stop" title="停止爬虫任务">停止</span>');
+           	  	 sender.parent().parent().parent().prev().children().children().text("正在运行");
+                 $.ajax({
+                   url : '../startCrawlerConfigInfo',
+                   type: "POST",
+                   data: "id="+ids[0],
+                   success : function(data){
+                     if(data.success){ //启动成功
+                         var crawlerResult = data.crawlerResult;
+                         var info = crawlerResult.crawlerTaskName +"爬取完成；"+"耗时："+crawlerResult.costTime+"秒；"
+                         +"处理url数："+crawlerResult.totalUrls+"；"+"抽取记录数："+crawlerResult.extractRecords;
+                    	 BUI.Message.Alert(info,'success');
+                    	 sender.parent().parent().parent().prev().children().children().text("完成");
+                    	 sender.html('<span class="grid-command btn-start" title="启动爬虫任务" >再次启动</span>');
+                     }else{ //启动失败
+                       BUI.Message.Alert('执行失败,error：'+data.error);
+                       sender.parent().parent().parent().prev().children().children().text("异常终止");
+                       sender.html('<span class="grid-command btn-start" title="启动爬虫任务" >启动</span>');
+                     }
+                   }
+               }); 
+				},'question');
+
+            // 修改记录状态;
+            }else{ 
+            	 BUI.Message.Alert('请选择一条记录!');
+            }
+        }
+    
+    //监听事件，删除一条记录
+    grid.on('cellclick',function(ev){
+      var sender = $(ev.domTarget); //点击的Dom
+      if(sender.hasClass('btn-del')){
+        var record = ev.record;
+        delItems([record]);
+      }else if( sender.hasClass('btn-start') ) {
+    	  var record = ev.record;
+    	  startItems([record],sender);
+      }else if(sender.hasClass('btn-stop'))
+       {
+          	alert("停止！");
+          	// ajax to stop the crawler task,do it later !
+          	 sender.html('<span class="grid-command btn-start" title="启动爬虫任务" >启动</span>');
+       }
+    });
+    Initializer= {}
+    Initializer.pagingSelectChange= function(obj)
+    {
+    	if(obj.value=="0")
+    	{
+    		document.getElementById("pagingDetail").style.display = "none";
+    	}
+    	else
+    		document.getElementById("pagingDetail").style.display = "";
+    }
+  });
+</script>
+
+<body>
+</html>  
