@@ -76,5 +76,6 @@ public class StandardExtractorTest2
 		//StandardCrawlerExecutor executor = new StandardCrawlerExecutor(info);
 		
 		//executor.start();
+		// 这个测试代码写的，呵呵;
 	}
 }
